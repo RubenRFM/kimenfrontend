@@ -1,0 +1,40 @@
+﻿@page "/Instituciones"
+@using Kimen.Frontend.Services
+@using Kimen.Frontend.Models
+
+@inject IInstitucionesServicio servicio
+
+
+<h3>Instituciones</h3>
+
+@if (lstInstituciones == null)
+{
+    <p><em>Recuperando datos...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Institución</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in lstInstituciones)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Institucion> lstInstituciones = new List<Institucion>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        lstInstituciones = await servicio.GetAll();
+    }
+}
